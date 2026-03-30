@@ -1,0 +1,148 @@
+1. https://ideone.com/vYZJEq
+class Solution
+{
+public:
+    void subsetS(vector<int> &arr, int n,int i,int sum,vector<int> &ans){
+        if(i==n){
+            ans.push_back(sum);
+            return;
+        }
+        subsetS(arr,n,i+1,sum+arr[i],ans);
+        subsetS(arr,n,i+1,sum,ans);
+    }
+    vector<int> subsetSums(vector<int> arr, int N)
+    {
+        vector<int> ans;
+        subsetS(arr,N,0,0,ans);
+        return ans;
+    }
+};
+
+2. https://ideone.com/s27kXS
+class Solution{
+    public:
+    int isSafe(int i, int j, int n,vector<vector<int>> &m,vector<vector<int>> & vis){
+        if(i<0||j<0||i==n||j==n) return 0;
+        if(m[i][j]==0) return 0;
+        if(vis[i][j]==1) return 0;
+        return 1;
+    }
+    void f(int i,int j, int n,string &s,vector<string> &ans,vector<vector<int>> &m,vector<vector<int>> & vis){
+        if(i==n-1&&j==n-1){
+            ans.push_back(s);
+            return;
+        }
+        int r[]={-1,1,0,0},c[]={0,0,-1,1};
+        char d[]={'U','D','L','R'};
+        for(int k=0;k<4;k++){
+            int newR=i+r[k],newC=j+c[k];
+            if(isSafe(newR,newC,n,m,vis)==0) continue;
+            vis[newR][newC]=1;
+            s.push_back(d[k]);
+            f(newR,newC,n,s,ans,m,vis);
+            s.pop_back();
+            vis[newR][newC]=0;
+        }
+    }
+    vector<string> findPath(vector<vector<int>> &m, int n) {
+        // Your code goes here
+        vector<string> ans;
+        string s;
+        if(m[0][0]==0||m[n-1][n-1]==0) return ans;
+        vector<vector<int>> vis(n,vector<int>(n,0));
+        vis[0][0]=1;
+        f(0,0,n,s,ans,m,vis);
+        return ans;
+    }
+};
+
+3. https://ideone.com/YBmlTa
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        unordered_set<string> words(wordDict.begin(), wordDict.end());
+        queue<int> queue;
+        vector<bool> seen(s.length(), false);
+        queue.push(0);
+
+        while (!queue.empty()) {
+            int start = queue.front();
+            queue.pop();
+
+            if (start == s.length()) {
+                return true;
+            }
+
+            for (int end = start + 1; end <= s.length(); end++) {
+                if (seen[end]) {
+                    continue;
+                }
+
+                if (words.find(s.substr(start, end - start)) != words.end()) {
+                    queue.push(end);
+                    seen[end] = true;
+                }
+            }
+        }
+
+        return false;
+    }
+};
+
+4. https://ideone.com/eqre5R
+int isSafe(int node,int col,vector<int> &color,vector<vector<int>> &g){
+        for(auto it:g[node]){
+            if(color[it]==col) return false;
+        }
+        return true;
+    }
+    int f(int node,int n,int m,vector<int> &color,vector<vector<int>> &g){
+        if(node==n) return true;
+        for(int i=1;i<=m;i++){
+            if(isSafe(node,i,color,g)){
+                color[node]=i;
+                if(f(node+1,n,m,color,g)) return true;
+                color[node]=0;
+            }
+        }
+        return false;
+    }
+    bool graphColoring(bool graph[101][101], int m, int n) {
+        // your code here
+        vector<int> color(n,0);
+        vector<vector<int>> g(n);
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(graph[i][j]==1) g[i].push_back(j);
+            }
+        }
+        return f(0,n,m,color,g);
+    }
+
+5. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
