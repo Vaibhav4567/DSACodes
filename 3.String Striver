@@ -1,0 +1,210 @@
+1. https://ideone.com/uXFsRA
+class Solution {
+public:
+    string reverseWords(string s) {
+        // remove leading and trailing spaces
+        s.erase(0, s.find_first_not_of(' '));  // prefixing spaces
+        s.erase(s.find_last_not_of(' ') + 1);  // suffixing spaces
+
+        // split by spaces
+        istringstream iss(s);
+        vector<string> words;
+        copy(istream_iterator<string>(iss), istream_iterator<string>(),
+             back_inserter(words));
+
+        // reverse and join
+        reverse(words.begin(), words.end());
+        ostringstream oss;
+        copy(words.begin(), words.end() - 1,
+             ostream_iterator<string>(oss, " "));
+        oss << words[words.size() - 1];
+        return oss.str();
+    }
+};
+
+2. https://ideone.com/QRvX2W
+class Solution {
+public:
+    string reverseWords(string s) {
+        int left = 0, right = s.size() - 1;
+        while (left <= right && s[left] == ' ') ++left;
+        while (left <= right && s[right] == ' ') --right;
+
+        deque<string> d;
+        string word;
+
+        while (left <= right) {
+            if (s[left] == ' ' && !word.empty()) {
+                d.push_front(word);
+                word.clear();
+            } else if (s[left] != ' ') {
+                word += s[left];
+            }
+            ++left;
+        }
+        d.push_front(word);
+
+        string result = "";
+        while (!d.empty()) {
+            result += d.front();
+            d.pop_front();
+            if (!d.empty()) {
+                result += " ";
+            }
+        }
+        return result;
+    }
+};
+
+3. https://ideone.com/AFzd9U
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        int mappingDictStoT[256] = {0};
+        int mappingDictTtoS[256] = {0};
+
+        for (int i = 0; i < s.length(); ++i) {
+            char c1 = s[i];
+            char c2 = t[i];
+
+            // Case 1: No mapping exists in either of the dictionaries
+            if (mappingDictStoT[c1] == 0 && mappingDictTtoS[c2] == 0) {
+                mappingDictStoT[c1] = c2;
+                mappingDictTtoS[c2] = c1;
+            }
+
+            // Case 2: Either mapping doesn't exist in one of the dictionaries
+            // or Mapping exists and it doesn't match in either of the
+            // dictionaries or both
+            else if (!(mappingDictStoT[c1] == c2 &&
+                       mappingDictTtoS[c2] == c1)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+};
+
+4. https://ideone.com/B5hD67
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        int m1[256] = {0}, m2[256] = {0}, n = s.size();
+        for (int i = 0; i < n; ++i) {
+            if (m1[s[i]] != m2[t[i]]) return false;
+            m1[s[i]] = i + 1;
+            m2[t[i]] = i + 1;
+        }
+        return true;
+    }
+};
+
+5. https://ideone.com/Vr5juf
+public boolean isAnagram(String s, String t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+    int[] table = new int[26];
+    for (int i = 0; i < s.length(); i++) {
+        table[s.charAt(i) - 'a']++;
+    }
+    for (int i = 0; i < t.length(); i++) {
+        table[t.charAt(i) - 'a']--;
+        if (table[t.charAt(i) - 'a'] < 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+6. https://ideone.com/9gE2zk
+class Solution {
+public:
+    string frequencySort(string s) {
+        unordered_map<char, int> freqMap;
+        for (char c : s) {
+            freqMap[c]++;
+        }
+
+        vector<vector<char>> buckets(s.size() + 1);
+
+        for (const auto& entry : freqMap) {
+            char c = entry.first;
+            int freq = entry.second;
+            buckets[freq].push_back(c);
+        }
+
+        string res;
+        for (int i = buckets.size() - 1; i > 0; i--) {
+            for (char c : buckets[i]) {
+                res.append(i, c);
+            }
+        }
+
+        return res;
+    }
+};
+
+7. https://ideone.com/LClrmf
+class Solution {
+public:
+    string countAndSay(int n) {
+        string currentString = "1";
+        for (int i = 2; i <= n; i++) {
+            string nextString;
+            for (int j = 0, k = 0; j < currentString.size(); j = k) {
+                while (k < currentString.size() &&
+                       currentString[k] == currentString[j])
+                    k++;
+                nextString += to_string(k - j) + currentString[j];
+            }
+            currentString = nextString;
+        }
+        return currentString;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
