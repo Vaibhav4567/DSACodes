@@ -1,0 +1,531 @@
+1. https://ideone.com/yUeBBV
+    class Solution
+    {
+    public:
+        int largest(vector<int> &arr, int n)
+        {
+            int maxi=INT_MIN;
+            for(int i=0;i<arr.size();i++) maxi=max(arr[i],maxi);
+            return maxi;
+        }
+    };
+
+2. https://ideone.com/sGXKgK
+	int print2largest(int arr[], int n) {
+	    int max1=arr[0],max2=-1;
+	    for(int i=1;i<n;i++){
+	        if(arr[i]>max1){
+	            max2=max1;
+	            max1=arr[i];
+	        }
+	        else if(arr[i]>max2&&arr[i]<max1)
+	            max2=arr[i];
+	    }
+	    return max2;
+	}
+
+3. https://leetcode.com/problems/remove-duplicates-from-sorted-array/submissions/896678460/
+    #include <bits/stdc++.h> 
+    vector<int> rotateArray(vector<int>& arr, int n) {
+    // Write your code here.
+    int temp=arr[0];
+    for(int i=1;i<n;i++) arr[i-1]=arr[i];
+    arr[n-1]=temp;
+    return arr;
+    }
+
+4. https://ideone.com/V9o7A4
+    #include <bits/stdc++.h> 
+    vector<int> rotateArray(vector<int>& arr, int n) {
+    // Write your code here.
+    int temp=arr[0];
+    for(int i=1;i<n;i++) arr[i-1]=arr[i];
+    arr[n-1]=temp;
+    return arr;
+    }
+
+5. https://ideone.com/CsXAcN
+	void leftRotate(int arr[], int k, int n) 
+	{ 
+        k%=n;
+        int temp[k];
+        for(int i=0;i<k;i++) temp[i]=arr[i];
+        for(int i=k;i<n;i++) arr[i-k]=arr[i];
+        int j=0;
+        for(int i=n-k;i<n;i++) arr[i]=temp[j++];
+	} 
+
+
+6. https://ideone.com/oJ4KkJ
+    void leftRotate(int arr[], int k, int n) 
+	{ 
+        k%=n;
+        int temp[k];
+        for(int i=0;i<k;i++) temp[i]=arr[i];
+        for(int i=k;i<n;i++) arr[i-k]=arr[i];
+        for(int i=n-k;i<n;i++) arr[i]=temp[i-(n-k)];
+	}
+
+7. https://ideone.com/yJwwVK
+    void leftRotate(int arr[], int k, int n) 
+	{ 
+        k%=n;
+        reverse(arr,arr+k);
+        reverse(arr+k,arr+n);
+        reverse(arr,arr+n);
+	} 
+
+8. https://ideone.com/GdKdli
+    vector<int> findUnion(int arr1[], int arr2[], int n, int m)
+    {
+        //Your code here
+        //return vector with correct order of elements
+        vector<int> ans;
+        int i=0,j=0;
+        while(i<n&&j<m){
+            if(arr1[i]==arr2[j]){
+                ans.push_back(arr1[i]);
+                while(i<n&&arr1[i]==ans.back()) i++;
+                while(j<m&&arr2[j]==ans.back()) j++;
+            }
+            else if(arr1[i]<arr2[j]){
+                ans.push_back(arr1[i]);
+                while(i<n&&arr1[i]==ans.back()) i++;
+            }
+            else{
+                ans.push_back(arr2[j]);
+                while(j<m&&arr2[j]==ans.back()) j++;
+            }
+        }
+        while(i<n){ 
+            ans.push_back(arr1[i]);
+            while(i<n&&arr1[i]==ans.back()) i++;
+        }
+        while(j<m){ 
+            ans.push_back(arr2[j]);
+            while(j<m&&arr2[j]==ans.back()) j++;    
+        }
+        return ans;
+    }
+
+9. https://ideone.com/7R6jWJ
+    vector<int> findUnion(int arr1[], int arr2[], int n, int m)
+    {
+        vector<int> ans;
+        int i=0,j=0;
+        while(i<n&&j<m){
+            if(arr1[i]==arr2[j]) {
+                if(ans.size()==0 || ans.back()!=arr1[i]) ans.push_back(arr1[i]);
+                i++;
+                j++;
+            }
+            else if(arr1[i]<arr2[j]) {
+                if(ans.size()==0 || ans.back()!=arr1[i]) ans.push_back(arr1[i]);
+                i++;
+            }
+            else {
+                if(ans.size()==0 || ans.back()!=arr2[j]) ans.push_back(arr2[j]);
+                j++;
+            }
+        }
+        while(i<n) {
+            if(ans.size()==0 || ans.back()!=arr1[i]) ans.push_back(arr1[i]);
+            i++;
+        }
+        while(j<m) {
+            if(ans.size()==0 || ans.back()!=arr2[j]) ans.push_back(arr2[j]);
+            j++;
+        }
+        return ans;
+    }
+
+10. https://ideone.com/fdhYga
+   vector<int> findUnion(int arr1[], int arr2[], int n, int m)
+    {
+        vector<int> ans;
+        int i=0,j=0;
+        while(i<n&&j<m){
+            if(arr1[i]<=arr2[j]) {
+                if(ans.size()==0 || ans.back()!=arr1[i]) ans.push_back(arr1[i]);
+                i++;
+            }
+            else {
+                if(ans.size()==0 || ans.back()!=arr2[j]) ans.push_back(arr2[j]);
+                j++;
+            }
+        }
+        while(i<n) {
+            if(ans.size()==0 || ans.back()!=arr1[i]) ans.push_back(arr1[i]);
+            i++;
+        }
+        while(j<m) {
+            if(ans.size()==0 || ans.back()!=arr2[j]) ans.push_back(arr2[j]);
+            j++;
+        }
+        return ans;
+    }
+
+11. https://ideone.com/A1fCln
+    vector<int> findArrayIntersection(vector<int> &arr1, int n, vector<int> &arr2, int m)
+    {
+        int i,j;
+        i=j=0;
+        vector<int> ans;
+        while(i<n&&j<m)
+        {
+            if(arr1[i]<arr2[j])
+            i++;
+            else if(arr1[i]>arr2[j])
+            j++;
+            else
+            {
+                ans.push_back(arr1[i]);
+                i++;
+                j++;
+            }
+        }
+        return ans;
+    }
+
+12. https://ideone.com/6PHLGV
+    int longestSubarrayWithSumK(vector<int> a, long long k) {
+        int maxi=0,n=a.size();
+        long long sum=0;
+        unordered_map<long long,int> mpp;
+        for(int i=0;i<n;i++){
+            sum+=a[i];
+            if(sum==k) maxi=i+1;
+            long long rem=sum-k;
+            if(mpp.find(rem)!=mpp.end()) maxi=max(maxi,i-mpp[rem]);
+            if(mpp.find(sum)==mpp.end())mpp[sum]=i;
+        }
+        return maxi;
+    }
+
+13. https://ideone.com/VaybGB
+    #include<bits/stdc++.h>
+    int longestSubarrayWithSumK(vector<int> a, long long k) {
+        int maxi=0,n=a.size();
+        int i=0,j=0;
+        long long sum=0;
+        while(j<n){
+            sum+=a[j];
+            j++;
+            while(sum>k){
+                sum-=a[i];
+                i++;
+            }
+            if(sum==k) maxi=max(maxi,j-i);
+        }
+        return maxi;
+    }
+
+14. https://ideone.com/Bk96W4
+    #include<bits/stdc++.h>
+    int longestSubarrayWithSumK(vector<int> a, long long k) {
+        int maxi=0,n=a.size();
+        int i=0,j=0;
+        long long sum=0;
+        while(j<n){
+            sum+=a[j];
+            j++;
+            if(sum==k) maxi=max(maxi,j-i);
+            while(sum>=k){
+                sum-=a[i];
+                i++;
+                if(sum==k) maxi=max(maxi,j-i);
+            }
+        }
+        return maxi;
+    }
+
+15. https://ideone.com/6PHLGV
+int longestSubarrayWithSumK(vector<int> a, long long k) {
+    int maxi=0,n=a.size();
+    long long sum=0;
+    unordered_map<long long,int> mpp;
+    for(int i=0;i<n;i++){
+        sum+=a[i];
+        if(sum==k) maxi=i+1;
+        long long rem=sum-k;
+        if(mpp.find(rem)!=mpp.end()) maxi=max(maxi,i-mpp[rem]);
+        if(mpp.find(sum)==mpp.end())mpp[sum]=i;
+    }
+    return maxi;
+}
+
+16. https://ideone.com/RQpdDx
+    vector<int> leaders(int a[], int n){
+        vector<int> leadersArr;
+        int maxi=a[n-1];
+        for(int i=n-1;i>=0;i--){
+            maxi=max(a[i],maxi);
+            if(a[i]>=maxi) leadersArr.push_back(a[i]);
+        }
+        reverse(leadersArr.begin(),leadersArr.end());
+        return leadersArr;
+    }
+
+17. https://ideone.com/j8hFdE
+    int findLongestConseqSubseq(int arr[], int n)
+    {
+      //Your code here
+      sort(arr,arr+n);
+      int lastSmaller=INT_MIN,currSeq=1,lcs=1;
+      for(int i=0;i<n;i++){
+          if(lastSmaller==arr[i]-1){
+              currSeq++;
+              lastSmaller=arr[i];
+          }
+          else if(lastSmaller<arr[i]-1){
+              currSeq=1;
+              lastSmaller=arr[i];
+          }
+          lcs=max(lcs,currSeq);
+      }
+      return lcs;
+    }
+
+18. https://ideone.com/mYYHC7
+    int getRow(int rowIndex, int colIndex) {
+        int prev=1,row=rowIndex;
+        for(int col=1;col<=colIndex;col++){
+            prev=(long long)prev*(row-col+1)/col;
+        }
+        return prev;
+    }
+
+19. https://ideone.com/f3Lm41
+// class Solution{
+//     public:
+//     int maxLen(vector<int>&A, int n)
+//     {   
+//         int maxi=0,sum=0;
+//         map<int,int> preficSumIndex;
+//         vector<int> prefixSum(n,0);
+//         for(int i=0;i<n;i++){
+//             sum+=A[i];
+//             prefixSum[i]=sum;
+//         }
+//         for(int i=0;i<n;i++){
+//             if(prefixSum[i]==0) maxi=i+1;
+//             else{
+//                 if(preficSumIndex.find(prefixSum[i])!=preficSumIndex.end()) maxi=max(maxi,i-preficSumIndex[prefixSum[i]]);
+//                 else preficSumIndex[prefixSum[i]]=i;
+//             }
+//         }
+//         return maxi;
+//     }
+// };
+
+class Solution{
+    public:
+    int maxLen(vector<int>&A, int n)
+    {   
+        int maxi=0,sum=0;
+        map<int,int> preficSumIndex;
+        for(int i=0;i<n;i++){
+            sum+=A[i];
+            //This line is important eg prefix sum array:- 758901/75890/758090
+            //In 1st tc maxi=index of 0
+            //2nd tc, 3rd case maxi=n
+            if(sum==0) maxi=i+1;
+            if(preficSumIndex.find(sum)!=preficSumIndex.end()) maxi=max(maxi,i-preficSumIndex[sum]);
+            if(preficSumIndex.find(sum)==preficSumIndex.end()) preficSumIndex[sum]=i;
+        }
+        return maxi;
+    }
+};
+
+20. https://ideone.com/hpAU9u
+        void merge(long long arr1[], long long arr2[], int n, int m) 
+        { 
+            int left=n-1, right=0;
+            while(left>=0&&right<m){
+                if(arr1[left]>arr2[right]){
+                    swap(arr1[left],arr2[right]);
+                    left--;
+                    right++;
+                }
+                else break;
+            }
+            sort(arr1,arr1+n);
+            sort(arr2,arr2+m);
+        } 
+
+21. https://ideone.com/rcJ7ic
+        void helper(long long a[], long long b[], int left, int right){
+            if(a[left]>b[right]) swap(a[left],b[right]);
+        }
+        void merge(long long arr1[], long long arr2[], int n, int m) 
+        { 
+            int len=n+m;
+            int gap=(len+1)/2;
+            while(true){
+                int left=0, right=gap;
+                while(right<len){
+                    if(left<n&&right<n) helper(arr1,arr1,left,right); //arr1.arr1
+                    else if(left<n&&right>=n) helper(arr1,arr2,left,right-n); //arr1,ar
+                    else helper(arr2,arr2,left-n,right-n); //arr2,arr2
+                    left++;
+                    right++;
+                }
+                if(gap==1) break;
+                gap=(gap+1)/2;
+            }
+        } 
+
+22. https://ideone.com/FFnpcp
+    vector<int> findTwoElement(vector<int> arr, int n) {
+        ll sumN=0,sum=0,sum2N=0,sum2=0;
+        sumN=n*(n+1)/2;
+        sum2N=n*(n+1)*(2*n+1)/6;
+        for(auto it:arr){
+            sum+=it;
+            sum2+=(ll)it*it;
+        }
+        ll diff=sum-sumN;
+        ll add=(sum2-sum2N)/diff;
+        int rep=(diff+add)/2;
+        int miss=add-rep;
+        return {rep,miss};
+    }
+
+23. https://ideone.com/5pWb52
+    vector<int> findTwoElement(vector<int> arr, int n) {
+        int xr=0;
+        for(int i=0;i<n;i++){
+            xr^=arr[i];
+            xr^=(i+1);
+        }
+        // cout<<xr;
+        int chk=xr&~(xr-1);
+        // while(xrr){
+        //     if(xrr&1==1) break;
+        //     i++;
+        //     xrr=xrr>>1;
+        // }
+        // cout<<i;
+        // int chk=pow(10,i);
+        // cout<<chk;
+        int zero=0,one=0;
+        for(int i=0;i<n;i++){
+            if(arr[i]&chk==0) zero^=arr[i];
+            else one^=arr[i];
+            if((i+1)&chk==0) zero^=(i+1);
+            else one^=(i+1);
+        }
+        int cnt=0;
+        for(auto it:arr){
+            if(it==zero) cnt++;
+        }
+        if(cnt==2) return {zero,one};
+        return {one,zero};
+    }
+
+24. https://ideone.com/AbZ5zK
+void merge(long long arr[],long long s,long long mid,long long e){
+        long long i=s,j=mid+1,k=0;
+        vector<long long> temp(e-i+1);
+        while(i<=mid&&j<=e){
+            if(arr[i]<=arr[j]) temp[k++]=arr[i++];
+            else temp[k++]=arr[j++];
+        }
+        while(i<=mid) temp[k++]=arr[i++];
+        while(j<=e) temp[k++]=arr[j++];
+        i=s;
+        for(auto it:temp) arr[i++]=it;
+    }
+    long long int mergesort(long long arr[],long long s,long long e){
+        if(s>=e) return 0;
+        long long mid=s+(e-s)/2;
+        long long int ans=0;
+        ans+=mergesort(arr,s,mid);
+        ans+=mergesort(arr,mid+1,e);
+        long long i=s,j=mid+1;
+        while(i<=mid){
+            while(j<=e&&arr[j]<arr[i]) j++;
+            ans+=j-mid-1;
+            i++;
+        }
+        merge(arr,s,mid,e);
+        return ans;
+    }
+    long long int inversionCount(long long arr[], long long n)
+    {
+        // Your Code Here
+        return mergesort(arr,0,n-1);
+    }
+
+25. https://ideone.com/bk9q7I
+void merge(long long arr[],long long s,long long mid,long long e){
+        long long i=s,j=mid+1,k=0;
+        vector<long long> temp(e-i+1);
+        while(i<=mid&&j<=e){
+            if(arr[i]<=arr[j]) temp[k++]=arr[i++];
+            else temp[k++]=arr[j++];
+        }
+        while(i<=mid) temp[k++]=arr[i++];
+        while(j<=e) temp[k++]=arr[j++];
+        i=s;
+        for(auto it:temp) arr[i++]=it;
+    }
+    void mergesort(long long arr[],long long s,long long e, long long int &ans){
+        if(s>=e) return ;
+        long long mid=s+(e-s)/2;
+        mergesort(arr,s,mid,ans);
+        mergesort(arr,mid+1,e,ans);
+        long long i=s,j=mid+1;
+        while(i<=mid){
+            while(j<=e&&arr[j]<arr[i]) j++;
+            ans+=j-mid-1;
+            i++;
+        }
+        merge(arr,s,mid,e);
+    }
+    long long int inversionCount(long long arr[], long long n)
+    {
+        // Your Code Here
+        long long int ans=0;
+        mergesort(arr,0,n-1,ans);
+        return ans;
+    }
+
+26. https://ideone.com/EPZD65
+    void merge(long long arr[],long long s,long long mid,long long e,long long int &ans){
+        long long i=s,j=mid+1,k=0;
+        vector<long long> temp(e-i+1);
+        while(i<=mid&&j<=e){
+            if(arr[i]<=arr[j]) temp[k++]=arr[i++];
+            else{ 
+                ans+=mid-i+1;
+                temp[k++]=arr[j++];
+            }
+        }
+        while(i<=mid) temp[k++]=arr[i++];
+        while(j<=e) temp[k++]=arr[j++];
+        i=s;
+        for(auto it:temp) arr[i++]=it;
+    }
+    void mergesort(long long arr[],long long s,long long e,long long int &ans){
+        if(s>=e) return;
+        long long mid=s+(e-s)/2;
+        mergesort(arr,s,mid,ans);
+        mergesort(arr,mid+1,e,ans);
+        merge(arr,s,mid,e,ans);
+    }
+    long long int inversionCount(long long arr[], long long n)
+    {
+        // Your Code Here
+        long long int ans=0;
+        mergesort(arr,0,n-1,ans);
+        return ans;
+    }
+
+
+
+
+
+
+
+
