@@ -1,0 +1,115 @@
+1. https://ideone.com/DoiZfO
+    int totalFruits(vector<int> &arr) {
+        int l=0,r=0,n=arr.size(),maxi=0;
+        unordered_map<int,int> mpp;
+        while(r<n){
+            mpp[arr[r]]++;
+            while(mpp.size()>2){
+                mpp[arr[l]]--;
+                if(mpp[arr[l]]==0) mpp.erase(arr[l]);
+                l++;
+            }
+            if(mpp.size()<=2) maxi=max(maxi,r-l+1);
+            r++;
+        }
+        return maxi;
+    }
+
+2. https://ideone.com/HOsI4G
+    int totalFruits(vector<int> &arr) {
+        int l=0,r=0,n=arr.size(),maxi=0;
+        unordered_map<int,int> mpp;
+        while(r<n){
+            mpp[arr[r]]++;
+            if(mpp.size()>2){
+                mpp[arr[l]]--;
+                if(mpp[arr[l]]==0) mpp.erase(arr[l]);
+                l++;
+            }
+            if(mpp.size()<=2) maxi=max(maxi,r-l+1);
+            r++;
+        }
+        return maxi;
+    }
+
+3. https://ideone.com/Rs34EU
+    int longestKSubstr(string s, int k) {
+    // your code here
+        int l=0,r=0,n=s.size(),maxi=0;
+        unordered_map<char,int> mpp;
+        while(r<n){
+            mpp[s[r]]++;
+            while(mpp.size()>k){
+                mpp[s[l]]--;
+                if(mpp[s[l]]==0) mpp.erase(s[l]);
+                l++;
+            }
+            if(mpp.size()==k) maxi=max(r-l+1,maxi);
+            r++;
+        }
+        return maxi!=0?maxi:-1;
+    }
+
+4. https://ideone.com/3D0tvJ
+    int longestKSubstr(string s, int k) {
+    // your code here
+        int l=0,r=0,n=s.size(),maxi=0;
+        unordered_map<char,int> mpp;
+        while(r<n){
+            mpp[s[r]]++;
+            if(mpp.size()>k){
+                mpp[s[l]]--;
+                if(mpp[s[l]]==0) mpp.erase(s[l]);
+                l++;
+            }
+            if(mpp.size()==k) maxi=max(r-l+1,maxi);
+            r++;
+        }
+        return maxi!=0?maxi:-1;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

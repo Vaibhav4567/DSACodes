@@ -1,0 +1,332 @@
+1. https://ideone.com/eSIvt9
+class MyStack
+{
+private:
+    int arr[1000];
+    int top;
+public:
+    MyStack(){top=-1;}
+    int pop();
+    void push(int);
+};
+*/
+
+void MyStack ::push(int x) {
+    // Your Code
+    top++;
+    arr[top]=x;
+}
+
+// Function to remove an item from top of the stack.
+int MyStack ::pop() {
+    // Your Code
+    if(top==-1) return -1;
+    top--;
+    return arr[top+1];
+}
+
+2. https://ideone.com/iiTjbg
+/*
+class MyQueue {
+private:
+    int arr[100005];
+    int front;
+    int rear;
+
+public :
+    MyQueue(){
+    front=0;rear=0;
+    }
+    void push(int);
+    int pop();
+};
+ */
+
+// Function to push an element x in a queue.
+void MyQueue ::push(int x) {
+    // Your Code
+    arr[rear]=x;
+    rear++;
+}
+
+// Function to pop an element from queue and return that element.
+int MyQueue ::pop() {
+    // Your Code
+    if(front==0&&rear==0) return -1;
+    int ans=arr[front];
+    front++;
+    if(front==rear){
+        front=rear=0;
+    }
+    return ans;
+}
+}
+
+3. https://ideone.com/4KQSZB
+// class MyStack {
+//   private:
+//     StackNode *top;
+//     int size=0;
+//   public:
+//     void push(int x) {
+//         // code here
+//         StackNode *temp=new StackNode(x);
+//         if(size>0) temp->next=top;
+//         top=temp;
+//         size++;
+//     }
+
+//     int pop() {
+//         // code here
+//         if(size==0) return -1;
+//         int ans=top->data;
+//         StackNode *temp=top;
+//         top=top->next;
+//         delete temp;
+//         size--;
+//         return ans;
+//     }
+
+//     MyStack() { top = NULL; }
+// };
+
+class MyStack {
+  private:
+    StackNode *top;
+  public:
+    void push(int x) {
+        // code here
+        StackNode *temp=new StackNode(x);
+        if(top==NULL){
+            top=temp;
+        }
+        else{
+            temp->next=top;
+            top=temp;
+        }
+    }
+
+    int pop() {
+        // code here
+        if(top==NULL) return -1;
+        int ans=top->data;
+        StackNode *temp=top;
+        top=top->next;
+        delete temp;
+        return ans;
+    }
+
+    MyStack() { top = NULL; }
+};
+
+4. https://ideone.com/4KQSZB
+// class MyStack {
+//   private:
+//     StackNode *top;
+//     int size=0;
+//   public:
+//     void push(int x) {
+//         // code here
+//         StackNode *temp=new StackNode(x);
+//         if(size>0) temp->next=top;
+//         top=temp;
+//         size++;
+//     }
+
+//     int pop() {
+//         // code here
+//         if(size==0) return -1;
+//         int ans=top->data;
+//         StackNode *temp=top;
+//         top=top->next;
+//         delete temp;
+//         size--;
+//         return ans;
+//     }
+
+//     MyStack() { top = NULL; }
+// };
+
+class MyStack {
+  private:
+    StackNode *top;
+  public:
+    void push(int x) {
+        // code here
+        StackNode *temp=new StackNode(x);
+        if(top==NULL){
+            top=temp;
+        }
+        else{
+            temp->next=top;
+            top=temp;
+        }
+    }
+
+    int pop() {
+        // code here
+        if(top==NULL) return -1;
+        int ans=top->data;
+        StackNode *temp=top;
+        top=top->next;
+        delete temp;
+        return ans;
+    }
+
+    MyStack() { top = NULL; }
+};
+
+5. https://ideone.com/jxoawx
+/* Structure of a node in Queue
+struct QueueNode
+{
+    int data;
+    QueueNode *next;
+    QueueNode(int a)
+    {
+        data = a;
+        next = NULL;
+    }
+};
+
+And structure of MyQueue
+struct MyQueue {
+    QueueNode *front;
+    QueueNode *rear;
+    void push(int);
+    int pop();
+    MyQueue() {front = rear = NULL;}
+}; */
+
+//Function to push an element into the queue.
+void MyQueue:: push(int x)
+{
+        // Your Code
+        QueueNode *temp=new QueueNode(x);
+        if(front==NULL){
+            front = rear = temp;
+        }
+        else{
+            rear->next=temp;
+            rear=rear->next;
+        }
+}
+
+//Function to pop front element from the queue.
+int MyQueue :: pop()
+{
+        // Your Code 
+        if(front==NULL){
+            return -1;
+        }
+        else{
+            QueueNode *temp=front;
+            int ans=front->data;
+            front=front->next;
+            delete temp;
+            if(front==NULL) rear=NULL;
+            return ans;
+        }
+}
+
+6. https://ideone.com/6tFrlj
+int celebrity(vector<vector<int> >& mat) {
+        // code here
+        int t=0,b=mat.size()-1;
+        while(t<b){
+            if(mat[t][b]==1) t++;
+            else if(mat[b][t]==1) b--;
+            else {
+                t++;
+                b--;
+            }
+        }
+        int sumR=0,sumC=0;
+        for(int i=0;i<mat.size();i++){
+            sumR+=mat[t][i];
+            sumC+=mat[i][t];
+        }
+        if(sumR==0&&sumC==mat.size()-1) return t;
+        return -1;
+    }
+
+7. https://ideone.com/UjfQqO
+    int celebrity(vector<vector<int> >& mat) {
+        // code here
+        int t=0,b=mat.size()-1;
+        while(t<b){
+            if(mat[t][b]==1) t++;
+            else if(mat[b][t]==1) b--;
+            else {
+                t++;
+                b--;
+            }
+        }
+        if(b>t) return -1;
+        int sumR=0,sumC=0;
+        for(int i=0;i<mat.size();i++){
+            sumR+=mat[b][i];
+            sumC+=mat[i][b];
+        }
+        if(sumR==0&&sumC==mat.size()-1) return t;
+        return -1;
+    }
+
+8. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

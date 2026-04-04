@@ -1,0 +1,1092 @@
+1. https://ideone.com/S9WNGm
+    int minE(vector<int>& height, int ind,vector<int> &dp){
+        if(ind==0) return dp[0]=0;
+        if(dp[ind]!=-1) return dp[ind];
+        int x=minE(height,ind-1,dp)+abs(height[ind]-height[ind-1]);
+        int y=INT_MAX;
+        if(ind>1) y=minE(height,ind-2,dp)+abs(height[ind]-height[ind-2]);
+        return dp[ind]=min(x,y);
+    }
+    int minimumEnergy(vector<int>& height, int n) {
+        vector<int> dp(n,-1);
+        return minE(height,n-1,dp);
+    }
+
+2. https://ideone.com/bZUPEk
+    int minimumEnergy(vector<int>& height, int n) {
+        vector<int> dp(n,-1);
+        dp[0]=0;
+        for(int ind=1;ind<n;ind++)
+        {
+            int x=dp[ind-1]+abs(height[ind]-height[ind-1]);
+            int y=INT_MAX;
+            if(ind>1) y=dp[ind-2]+abs(height[ind]-height[ind-2]);
+            dp[ind]=min(x,y);
+        }
+        return dp[n-1];
+    }
+
+3. https://ideone.com/QEV6sN
+    int minimumEnergy(vector<int>& height, int n) {
+        int prev2=0,prev1=0;
+        for(int ind=1;ind<n;ind++){
+            int x=prev1+abs(height[ind]-height[ind-1]);
+            int y=INT_MAX;
+            if(ind>1) y=prev2+abs(height[ind]-height[ind-2]);
+            prev2=prev1;
+            prev1=min(x,y);
+        }
+        return prev1;
+    }
+
+4. https://ideone.com/F9InYA
+#include <bits/stdc++.h>
+int minE(vector<int>& height, int ind,vector<int> dp){
+    if(ind==0) return dp[0]=0;
+    if(ind==1) return dp[1]=abs(height[1]-height[0]);
+    if(dp[ind]!=-1) return dp[ind];
+    int x=minE(height,ind-1,dp)+abs(height[ind]-height[ind-1]);
+    int y=minE(height,ind-2,dp)+abs(height[ind]-height[ind-2]);
+    return dp[ind]=min(x,y);
+}
+int minE(int ind, vector<int>& height, vector<int>& dp){
+    if(ind==0) return dp[0]=0;
+    if(ind==1) return dp[1]=abs(height[1]-height[0]);
+    if(dp[ind]!=-1) return dp[ind];
+    int x=minE(ind-1,height,dp)+abs(height[ind]-height[ind-1]);
+    int y=minE(ind-2,height,dp)+abs(height[ind]-height[ind-2]);
+    return dp[ind]=min(x,y);
+}
+
+int frogJump(int n, vector<int> &heights)
+{
+    vector<int> dp(n,-1);
+    // return minE(heights,n-1,dp);
+    return minE(n-1,heights,dp);
+
+}
+
+5. https://ideone.com/9nnEyc
+    // int minCost(vector<int>& height, int ind, int k,int dp[],int mini) {
+    //     if(ind==0) return 0;
+    //     if(dp[ind]!=0) return dp[ind];
+    //     for(int i=1;i<=k;i++){
+    //         if(ind-i<0) break;
+    //         if(dp[ind-i]==0) dp[ind-i]=minCost(height,ind-i,k,dp,mini);
+    //         mini=min(mini,dp[ind-i]+abs(height[ind]-height[ind-i]));
+    //     }
+    //     return dp[ind]=mini;
+    // }
+    int minimizeCost(vector<int>& height, int k) {
+        // int dp[n]={0},mini=INT_MAX;
+        // return minCost(height,n-1,k,dp,mini);
+        int n=height.size();
+        int dp[n];
+        dp[0]=0;
+        for(int i=1;i<n;i++){
+            int mini=INT_MAX;
+            for(int j=1;j<=k;j++){
+                if(i-j<0) break;
+                mini=min(mini,dp[i-j]+abs(height[i]-height[i-j]));
+            }
+            dp[i]=mini;
+        }
+        return dp[n-1];
+    }
+
+6. https://ideone.com/hhBxlD
+	int findMax(int *arr, int dp[],int ind){
+	    if(ind==0) return arr[ind];
+	    int maxi=0;
+	    if(ind>1) {
+	        if(dp[ind-2]!=0) maxi=max(maxi,dp[ind-2]);
+	        else maxi=max(maxi,findMax(arr,dp,ind-2));
+	    }
+	    if(ind>2) {
+	        if(dp[ind-3]!=0) maxi=max(maxi,dp[ind-3]);
+	        else maxi=max(maxi,findMax(arr,dp,ind-3));
+	    }
+	    return dp[ind]=maxi+arr[ind];                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+	}
+	int findMaxSum(int *arr, int n) {
+	    int dp[n]={0};
+	    return max(findMax(arr,dp,n-1),findMax(arr,dp,n-2));
+	}
+
+7. https://ideone.com/xS3iz0
+	int findMax(int *arr, int dp[],int ind){
+	    if(ind==0) return arr[ind];
+	    if(ind<0) return 0;
+	    if(dp[ind]!=0) return dp[ind];
+	    int pick=arr[ind]+findMax(arr,dp,ind-2);
+	    int notpick=0+findMax(arr,dp,ind-1);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+	    dp[ind]=max(pick,notpick);  
+	}
+	int findMaxSum(int *arr, int n) {
+	    int dp[n]={0};
+	    return findMax(arr,dp,n-1);
+	}
+
+8. https://ideone.com/T1XGQU
+	int findMaxSum(int *arr, int n) {
+	    int dp[n]={0};
+	    dp[0]=arr[0];
+	   for(int i=1;i<n;i++){
+	        int pick=arr[i];
+	        if(i>1) pick+=dp[i-2];
+	        int notpick=0+dp[i-1]; 
+	        dp[i]=max(pick,notpick);
+	    }
+	    return dp[n-1];
+	}
+
+9. https://ideone.com/RVwZyr
+	int findMaxSum(int *arr, int n) {
+	    int prev1=arr[0],prev2=0;
+	   for(int i=1;i<n;i++){
+	        int pick=arr[i]+prev2;
+	        int notpick=0+prev1;
+	        int curri=max(pick,notpick);
+	        prev2=prev1;
+	        prev1=curri;
+	    }
+	    return prev1;
+	}
+
+10. https://ideone.com/tOWvWD
+    int FindMaxSum(int arr[], int n)
+    {
+        int prev2=0,prev1=arr[0];
+        for(int i=1;i<n;i++){
+            int pick=arr[i]+prev2;
+            int notpick=0+prev1;
+            prev2=prev1;
+            prev1=max(pick,notpick);
+        }
+        return prev1;
+    }
+
+11. https://ideone.com/tIcIVX
+    int geek(int day,int curr,vector<vector<int>>& points,vector<vector<int>>& dp){
+        //Base cndn
+        if(day<0) return 0;
+        //Since our call start with n
+        if(day!=points.size()&&dp[day][curr]!=-1) return dp[day][curr];
+        int maxi=0;
+        for(int task=0;task<3;task++){
+            if(task!=curr) maxi=max(maxi,geek(day-1,task,points,dp));
+        }
+        if(day==points.size()) return maxi;
+        //here points[day][curr] added, in striver point[day][task] in loop
+        else return dp[day][curr]=maxi+points[day][curr];
+    }
+    int maximumPoints(vector<vector<int>>& points, int n) {
+        vector<vector<int>> dp(n,vector<int>(3,-1));
+        //Call start from (4,3) in striver (3,3)
+        return geek(n,3,points,dp);
+    }
+
+12. https://ideone.com/L8HMW1
+    int geek(int day,int curr,vector<vector<int>>& points,vector<vector<int>>& dp){
+        if(day<0) return 0;
+        if(dp[day][curr]!=-1) return dp[day][curr];
+        int maxi=0;
+        for(int task=0;task<3;task++){
+            if(task!=curr) maxi=max(maxi,geek(day-1,task,points,dp));
+        }
+        //here points[day][curr] added, in striver point[day][task] in loop
+        //Runtime err since point[4][3]
+        return dp[day][curr]=maxi+points[day][curr];
+    }
+    int maximumPoints(vector<vector<int>>& points, int n) {
+        //To avoid runtime increase size of dp by 1 row,col than points or use if else
+        //Our call start with (4,3) while striver with(3,3) hence he inc only col
+        //point size n*2
+        vector<vector<int>> dp(n+1,vector<int>(3,-1));
+        return geek(n,3,points,dp);
+    }
+
+13. https://ideone.com/8RUSxI
+    int geek(int day,int curr,vector<vector<int>>& points,vector<vector<int>>& dp){
+        if(day<0) return 0;
+        if(dp[day][curr]!=-1) return dp[day][curr];
+        int maxi=0;
+        for(int task=0;task<3;task++){
+            //Runtime err since point[4][3] after if else not properly removed
+            //Why striver used point[day][task] in loop
+            //Striver not err since day max n-1, task max 2
+            if(task!=curr) maxi=max(maxi,geek(day-1,task,points,dp)+points[day][curr]);
+        }
+        return dp[day][curr]=maxi;
+    }
+    int maximumPoints(vector<vector<int>>& points, int n) {
+        //To avoid runtime increase size of dp by 1 row,col than points or use if else
+        //Our call start with (4,3) while striver with(3,3) hence he inc only col
+        //point size n*2
+        vector<vector<int>> dp(n+1,vector<int>(3,-1));
+        return geek(n,3,points,dp);
+    }
+
+14. https://ideone.com/Hc97TA
+    int maximumPoints(vector<vector<int>>& points, int n) {
+        vector<vector<int>> dp (n,vector<int>(3,-1)) ;
+        for(int task=0;task<3;task++) dp[0][task]=points[0][task];
+        for(int i=1;i<n;i++){
+            dp[i][0]=points[i][0]+max(dp[i-1][1],dp[i-1][2]);
+            dp[i][1]=points[i][1]+max(dp[i-1][0],dp[i-1][2]);
+            dp[i][2]=points[i][2]+max(dp[i-1][0],dp[i-1][1]);
+        }
+        return max(dp[n-1][0],max(dp[n-1][1],dp[n-1][2]));
+    }
+
+15. https://ideone.com/C40nzv
+    int maximumPoints(vector<vector<int>>& points, int n) {
+        //Space Optimization
+        //We need only previous row to calc. current row
+        vector<int> dp(3,-1) ;
+        for(int task=0;task<3;task++) dp[task]=points[0][task];
+        for(int i=1;i<n;i++){
+            vector<int> temp(3,-1);
+            temp[0]=points[i][0]+max(dp[1],dp[2]);
+            temp[1]=points[i][1]+max(dp[0],dp[2]);
+            temp[2]=points[i][2]+max(dp[0],dp[1]);
+            dp=temp;
+        }
+        return max(dp[0],max(dp[1],dp[2]));
+    }
+
+16. https://ideone.com/WpUkF8
+// // 1.Memoization
+// #include <bits/stdc++.h> 
+// int cnt(int i,int j,int m,int n,vector<vector<int>> &dp){
+// 	if(i==0&&j==0) return 1;
+// 	if(i<0||j<0) return 0;
+// 	if(dp[i][j]!=-1) return dp[i][j];
+// 	int up=cnt(i-1,j,m,n,dp);
+// 	int left=cnt(i,j-1,m,n,dp);
+// 	return dp[i][j]=up+left;
+// }
+// int uniquePaths(int m, int n) {
+// 	vector<vector<int>> dp(m,vector<int>(n,-1));
+// 	return cnt(m-1,n-1,m,n,dp);
+// }
+
+// // 2.Tabulation
+// #include <bits/stdc++.h> 
+// int uniquePaths(int m, int n) {
+// 	vector<vector<int>> dp(m,vector<int>(n,-1));
+// 	for(int i=0;i<m;i++){
+// 		for(int j=0;j<n;j++){
+// 			//Instead of 'or' if use 'and' then in else use if(i>0),if(j>0)
+// 			if(i==0||j==0) dp[i][j]=1;
+// 			else {
+// 				int up=dp[i-1][j];
+// 				int left=dp[i][j-1];
+// 				dp[i][j]=up+left;
+// 			}
+// 		}
+// 	}
+// 	return dp[m-1][n-1];
+// }
+
+// 3.Space Optimization
+#include <bits/stdc++.h> 
+int uniquePaths(int m, int n) {
+	//Declare -1th row
+	vector<int> prev(n,0);
+	for(int i=0;i<m;i++){
+		vector<int> curr(n,0);
+		for(int j=0;j<n;j++){
+			if(i==0||j==0) curr[j]=1;
+			else {
+				int up=prev[j];
+				int left=curr[j-1];
+				curr[j]=up+left;
+			}
+		}
+		prev=curr;
+	}
+	return prev[n-1];
+}
+
+17. https://ideone.com/HxkTer
+//1.Mem
+// #include <bits/stdc++.h> 
+// int ifSumK(int ind, int target, vector<int> &arr,vector<vector<int>> &dp) {
+//     if(target==0) return 1;
+//     //If arr[0]==target return true else false
+//     if(ind==0) return arr[0]==target;
+//     if(dp[ind][target]!=-1) return dp[ind][target];
+//     int notTake=ifSumK(ind-1,target,arr,dp);
+//     int take=0;
+//     if(arr[ind]<=target) take=ifSumK(ind-1,target-arr[ind],arr,dp);
+//     return dp[ind][target]=notTake||take;
+// }
+// bool subsetSumToK(int n, int k, vector<int> &arr) {
+//     vector<vector<int>> dp(n,vector<int>(k+1,-1)); //k+1 not k
+//     return ifSumK(n-1,k,arr,dp);
+// }
+
+// //2.Tab
+// #include <bits/stdc++.h> 
+// bool subsetSumToK(int n, int k, vector<int> &arr) {
+//     //Remember to use (k+1)
+//     vector<vector<int>> dp(n,vector<int>(k+1,0));
+
+//     //Fill value for 0th row and 0th column
+//     //for 0th row -> value=1(if (col val==arr[0]) or 0th column ), rest=0
+//     //Jaha p bhi k column val value arr[0] hogi
+//     //Dont use dp[0][arr[0]] = 1; what if arr[0]>k, so use if(arr[0]>k) OR 
+//     for (int target = 0; target <= k; target++) {
+//         if (arr[0] == target) {
+//             dp[0][target] = 1;
+//             break;
+//         }
+//     }
+
+//     //For target=0 (column 0th) value=1
+//     for(int ind=0;ind<n;ind++) dp[ind][0]=1;
+
+//     for(int ind=1;ind<n;ind++){
+//         for(int target=1;target<=k;target++){
+//            int notTake=dp[ind-1][target];
+//            int take=0;
+//            if(arr[ind]<=target) take=dp[ind-1][target-arr[ind]];
+//            dp[ind][target]=notTake||take;
+//         }
+//     }
+//     return dp[n-1][k];
+// }
+
+//3.SO
+#include <bits/stdc++.h> 
+bool subsetSumToK(int n, int k, vector<int> &arr) {
+    vector<int> prev(k+1,0),curr(k+1,0);
+
+    if (arr[0] <= k) prev[arr[0]] = 1;
+
+    //Remember this step
+    prev[0]=1;
+
+    for(int ind=1;ind<n;ind++){
+        for(int target=0;target<=k;target++){
+            if(target==0) curr[target]=1;
+           else{
+               int notTake=prev[target];
+               int take=0;
+               if(arr[ind]<=target) take=prev[target-arr[ind]];
+               curr[target]=notTake||take;
+            }
+        }
+        prev=curr;
+    }
+    return prev[k];
+}
+
+18. https://ideone.com/o8eTMv
+#include <bits/stdc++.h> 
+int minSubsetSumDifference(vector<int>& arr, int n)
+{
+	int totSum=0;
+	for(int i=0;i<n;i++) totSum+=arr[i];
+	//Here k=total sum of array
+	int k=totSum;
+	vector<int>prev(k+1,0),curr(k+1,0);
+	prev[0]=1;
+	if(arr[0]<=k) prev[arr[0]]=1;
+	for(int i=1;i<n;i++){
+		for(int target=0;target<=k;target++){
+			//All value for target==0 should be 1 -> start target from 0 or started from 1 then make curr[0]=1 outside loop
+			int notTake=prev[target];
+			int take=0;
+			if(arr[i]<=target) take=prev[target-arr[i]];
+			curr[target]=notTake||take;
+		}
+		prev=curr;
+	}
+	int mini=INT_MAX;
+	//If given array subset can sum to s1, then calc mini
+	//here can use totSum/2 instead of totSum
+	for(int s1=0;s1<=totSum/2;s1++) {
+		if(prev[s1]==1) mini=min(mini,totSum-2*s1);
+	}
+	return mini;
+}
+
+19. https://ideone.com/kjproA
+//1.Memoization
+// int cnt(int ind,int target,vector<int>& arr,vector<vector<int>>& dp){
+// 	if(target==0) return 1;
+// 	if(ind==0) return arr[0]==target;
+// 	if(dp[ind][target]!=-1) return dp[ind][target];
+// 	int notTake=cnt(ind-1,target,arr,dp);
+// 	int take=0;
+// 	if(arr[ind]<=target) take=cnt(ind-1,target-arr[ind],arr,dp);
+// 	return dp[ind][target]=(take+notTake)%(1000000007);
+// }
+
+// int findWays(vector<int>& arr, int k)
+// {
+// 	int n=arr.size();
+// 	vector<vector<int>> dp(n,vector<int>(k+1,-1));
+// 	return cnt(n-1,k,arr,dp);
+// }
+
+//2.Tabulation
+// int findWays(vector<int>& arr, int k)
+// {
+// 	int n=arr.size();
+// 	vector<vector<int>> dp(n,vector<int>(k+1,0));
+// 	for(int ind=0;ind<n;ind++) dp[ind][0]=1;
+// 	if(arr[0]<=k) dp[0][arr[0]]=1;
+// 	for(int ind=1;ind<n;ind++){
+// 		for(int target=1;target<=k;target++){
+// 			int notTake=dp[ind-1][target];
+// 			int take=0;
+// 			if(arr[ind]<=target) take=dp[ind-1][target-arr[ind]];
+// 			dp[ind][target]=(take+notTake)%(1000000007);
+// 		}
+// 	}
+// 	return dp[n-1][k];
+// }
+
+//3.Space Optimization
+int findWays(vector<int>& arr, int k)
+{
+	int n=arr.size();
+	vector<int> prev(k+1,0),curr(k+1,0);
+	//for(int ind=0;ind<n;ind++) dp[ind][0]=1; instead of this 43,44
+	prev[0]=1;	
+	curr[0]=1;
+	if(arr[0]<=k) prev[arr[0]]=1;
+	for(int ind=1;ind<n;ind++){
+		for(int target=0;target<=k;target++){
+			int notTake=prev[target];
+			int take=0;
+			if(arr[ind]<=target) take=prev[target-arr[ind]];
+			curr[target]=(take+notTake)%(1000000007);
+		}
+		prev=curr;
+	}
+	return prev[k];
+}
+
+20. https://ideone.com/N1uyPJ
+// 1.Memoization
+int cnt(int ind,int target,vector<int>& arr,vector<vector<int>>& dp){
+	if(ind<0) return target==0;
+	if(dp[ind][target]!=-1) return dp[ind][target];
+	int notTake=cnt(ind-1,target,arr,dp);
+	int take=0;
+	if(arr[ind]<=target) take=cnt(ind-1,target-arr[ind],arr,dp);
+	return dp[ind][target]=(take+notTake)%(1000000007);
+}
+
+int findWays(vector<int>& arr, int k)
+{
+	int n=arr.size();
+	vector<vector<int>> dp(n,vector<int>(k+1,-1));
+	return cnt(n-1,k,arr,dp);
+}
+
+//2.Tabulation
+// int findWays(vector<int>& arr, int k)
+// {
+// 	int n=arr.size();
+// 	vector<vector<int>> dp(n,vector<int>(k+1,0));
+// 	for(int ind=0;ind<n;ind++) dp[ind][0]=1;
+// 	if(arr[0]<=k) dp[0][arr[0]]=1;
+// 	for(int ind=1;ind<n;ind++){
+// 		for(int target=1;target<=k;target++){
+// 			int notTake=dp[ind-1][target];
+// 			int take=0;
+// 			if(arr[ind]<=target) take=dp[ind-1][target-arr[ind]];
+// 			dp[ind][target]=(take+notTake)%(1000000007);
+// 		}
+// 	}
+// 	return dp[n-1][k];
+// }
+
+//3.Space Optimization
+// int findWays(vector<int>& arr, int k)
+// {
+// 	int n=arr.size();
+// 	vector<int> prev(k+1,0),curr(k+1,0);
+// 	//for(int ind=0;ind<n;ind++) dp[ind][0]=1; instead of this 43,44
+// 	prev[0]=1;	
+// 	curr[0]=1;
+// 	if(arr[0]<=k) prev[arr[0]]=1;
+// 	for(int ind=1;ind<n;ind++){
+// 		for(int target=0;target<=k;target++){
+// 			int notTake=prev[target];
+// 			int take=0;
+// 			if(arr[ind]<=target) take=prev[target-arr[ind]];
+// 			curr[target]=(take+notTake)%(1000000007);
+// 		}
+// 		prev=curr;
+// 	}
+// 	return prev[k];
+// }
+
+21. https://ideone.com/HWu7wy
+//1.Memoization
+// #include <bits/stdc++.h>
+// int knap(int ind,int w,vector<int> &weight, vector<int> &value,vector<vector<int>> &dp){
+// 	if(w==0) return 0;
+// 	if(ind==0){
+// 		if(weight[ind]<=w) return value[0];
+// 		return 0;
+// 	}
+// 	if(dp[ind][w]!=-1) return dp[ind][w];
+// 	int notTake=0+knap(ind-1,w,weight,value,dp);
+// 	int take=0;
+// 	if(weight[ind]<=w) take=value[ind]+knap(ind-1,w-weight[ind],weight,value,dp);
+// 	return dp[ind][w]=max(take,notTake);
+// }
+// int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+// {
+// 	vector<vector<int>> dp(n,vector<int>(maxWeight+1,-1));
+// 	return knap(n-1,maxWeight,weight,value,dp);
+// }
+
+//2.Tabulation
+// #include <bits/stdc++.h> 
+// int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+// {
+// 	vector<vector<int>> dp(n,vector<int>(maxWeight+1,0));
+// 	for(int w=weight[0];w<=maxWeight;w++) dp[0][w]=value[0];
+// 	for(int ind=1;ind<n;ind++){
+//		w can start witn 0/1
+// 		for(int w=1;w<=maxWeight;w++){
+// 			int notTake=0+dp[ind-1][w];
+// 			int take=0;
+// 			if(weight[ind]<=w) take=value[ind]+dp[ind-1][w-weight[ind]];
+// 			dp[ind][w]=max(take,notTake);
+// 		}
+// 	}
+// 	return dp[n-1][maxWeight];
+// }
+
+//3.Space Optimization
+// #include <bits/stdc++.h> 
+// int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+// {
+// 	vector<int> prev(maxWeight+1,0),curr(maxWeight+1,0);
+// 	for(int w=weight[0];w<=maxWeight;w++) prev[w]=value[0];
+// 	for(int ind=1;ind<n;ind++){
+// 		for(int w=1;w<=maxWeight;w++){
+// 			int notTake=0+prev[w];
+// 			int take=0;
+// 			if(weight[ind]<=w) take=value[ind]+prev[w-weight[ind]];
+// 			curr[w]=max(take,notTake);
+// 		}
+// 		prev=curr;
+// 	}
+// 	return prev[maxWeight];
+// }
+
+//4.Space Optimization in 1 row 
+//Travel inner loop R to L , replace curr with prev
+#include <bits/stdc++.h> 
+int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+{
+	vector<int> prev(maxWeight+1,0);
+	for(int w=weight[0];w<=maxWeight;w++) prev[w]=value[0];
+	for(int ind=1;ind<n;ind++){
+		for(int w=maxWeight;w>0;w--){
+			int notTake=0+prev[w];
+			int take=0;
+			if(weight[ind]<=w) take=value[ind]+prev[w-weight[ind]];
+			prev[w]=max(take,notTake);
+		}
+	}
+	return prev[maxWeight];
+}
+
+22. https://ideone.com/zxHE9D
+//1.Memoization
+// #include <bits/stdc++.h> 
+// int f(int ind, int wt, vector<int> &profit, vector<int> &weight,vector<vector<int>> &dp){
+//     if(ind==0){
+//         //here wt need not to be 0 therefore not used if(wt%weight[0]==0)
+//         //TC: 2 15
+//         //profit:9 9 
+//         //weight:2 12 
+//         return (wt/weight[0])*profit[0];
+//     }
+//     if(dp[ind][wt]!=-1) return dp[ind][wt];
+//     int notTake=0+f(ind-1,wt,profit,weight,dp);
+//     int take=0;
+//     if(weight[ind]<=wt) take=profit[ind]+f(ind,wt-weight[ind],profit,weight,dp);
+//     return dp[ind][wt]=max(notTake,take);
+// }
+// int unboundedKnapsack(int n, int w, vector<int> &profit, vector<int> &weight)
+// {
+//     vector<vector<int>> dp(n,vector<int>(w+1,-1));
+//     return f(n-1,w,profit,weight,dp);
+// }
+
+//2.Tabulation
+// #include <bits/stdc++.h> 
+// int unboundedKnapsack(int n, int w, vector<int> &profit, vector<int> &weight)
+// {
+//     vector<vector<int>> dp(n,vector<int>(w+1,0));
+//     for(int wt=0;wt<=w;wt++) dp[0][wt]=(wt/weight[0])*profit[0];
+//     for(int ind=1;ind<n;ind++){
+//         for(int wt=0;wt<=w;wt++){
+//             int notTake=0+dp[ind-1][wt];
+//             int take=0;
+//             if(weight[ind]<=wt) take=profit[ind]+dp[ind][wt-weight[ind]];
+//             dp[ind][wt]=max(notTake,take);
+//         }
+//     }
+//     return dp[n-1][w];
+// }
+
+//3.Space Optimization in two row
+// #include <bits/stdc++.h> 
+// int unboundedKnapsack(int n, int w, vector<int> &profit, vector<int> &weight)
+// {
+//     vector<int>prev(w+1,0),curr(w+1,0);
+//     for(int wt=0;wt<=w;wt++) prev[wt]=(wt/weight[0])*profit[0];
+//     for(int ind=1;ind<n;ind++){
+//         for(int wt=0;wt<=w;wt++){
+//             int notTake=0+prev[wt];
+//             int take=0;
+//             if(weight[ind]<=wt) take=profit[ind]+curr[wt-weight[ind]];
+//             curr[wt]=max(notTake,take);
+//         }
+//         prev=curr;
+//     }
+//     return prev[w];
+// }
+
+//3.Space Optimization in one row
+//Just change curr with prev(that is use one row)
+//No need to have reverse inner loop for wt as in 0/1 knapsack 
+//Since here take depend on curr ith row not (i-1)th row
+#include <bits/stdc++.h> 
+int unboundedKnapsack(int n, int w, vector<int> &profit, vector<int> &weight)
+{
+    vector<int>prev(w+1,0);
+    for(int wt=0;wt<=w;wt++) prev[wt]=(wt/weight[0])*profit[0];
+    for(int ind=1;ind<n;ind++){
+        for(int wt=0;wt<=w;wt++){
+            int notTake=0+prev[wt];
+            int take=0;
+            if(weight[ind]<=wt) take=profit[ind]+prev[wt-weight[ind]];
+            prev[wt]=max(notTake,take);
+        }
+    }
+    return prev[w];
+}
+
+23. https://ideone.com/yOjDmh
+//1.Memoization
+// #include <bits/stdc++.h> 
+// int f(int ind, int len, vector<int> &price,vector<vector<int>> &dp){
+//     if(ind==0){
+// 		//Since rodLength=1; no need of these 2 lines as implicitely done
+// 		// if(len%rodLength==0) return price[ind]*(len/rodLength);
+// 		// return -1e8;
+// 		return price[0]*len;
+// 	}
+// 	if(dp[ind][len]!=-1) return dp[ind][len];
+// 	int notTake=0+f(ind-1,len,price,dp);
+// 	int take=-1e8;
+// 	int rodLength=ind+1;
+// 	if(rodLength<=len) take=price[ind]+f(ind,len-rodLength,price,dp);
+// 	return dp[ind][len]=max(take,notTake);
+// }
+// int cutRod(vector<int> &price, int n)
+// {
+// 	vector<vector<int>> dp(n,vector<int>(n+1,-1));
+// 	return f(n-1,n,price,dp);
+// }
+
+//2.Tabulation
+// int cutRod(vector<int> &price, int n)
+// {
+// 	vector<vector<int>> dp(n,vector<int>(n+1,0));
+// 	for(int len=0;len<=n;len++) dp[0][len]=price[0]*len;
+// 	for(int ind=1;ind<n;ind++){
+// 		for(int len=0;len<=n;len++){
+// 			int notTake=0+dp[ind-1][len];
+// 			int take=-1e8;
+// 			int rodLength=ind+1;
+// 			if(rodLength<=len) take=price[ind]+dp[ind][len-rodLength];
+// 			dp[ind][len]=max(take,notTake);
+// 		}
+// 	}
+// 	return dp[n-1][n];
+// }
+
+//3.Space Optimization with two row
+// int cutRod(vector<int> &price, int n)
+// {
+// 	vector<int> prev(n+1,0),prev(n+1,0);
+// 	for(int len=0;len<=n;len++) prev[len]=price[0]*len;
+// 	for(int ind=1;ind<n;ind++){
+// 		for(int len=0;len<=n;len++){
+// 			int notTake=0+prev[len];
+// 			int take=-1e8;
+// 			int rodLength=ind+1;
+// 			if(rodLength<=len) take=price[ind]+prev[len-rodLength];
+// 			prev[len]=max(take,notTake);
+// 		}
+// 		prev=prev;
+// 	}
+// 	return prev[n];
+// }
+
+//4.Space Optimization with one row
+int cutRod(vector<int> &price, int n)
+{
+	vector<int> prev(n+1,0);
+	for(int len=0;len<=n;len++) prev[len]=price[0]*len;
+	for(int ind=1;ind<n;ind++){
+		for(int len=0;len<=n;len++){
+			int notTake=0+prev[len];
+			int take=-1e8;
+			int rodLength=ind+1;
+			if(rodLength<=len) take=price[ind]+prev[len-rodLength];
+			prev[len]=max(take,notTake);
+		}
+	}
+	return prev[n];
+}
+
+24. https://ideone.com/dmNujr
+#include<bits/stdc++.h>
+string findLCS(int n, int m,string &s1, string &s2){
+	string s="";
+    vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            if(s1[i-1]==s2[j-1]) {dp[i][j]=1+dp[i-1][j-1];}
+            else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+        }
+    }
+    //Striver method
+    int len=dp[n][m];
+    for(int i=0;i<len;i++) s+='$';
+    int i=n,j=m,index=len-1;
+    while(i!=0&&j!=0){
+        if(s1[i-1]==s2[j-1]){
+            s[index]=s1[i-1];
+            i--;
+            j--;
+            index--;
+        }
+        else if(dp[i-1][j]>dp[i][j-1]) i--;
+        else j--;
+    }
+
+    //My Method
+    //Continue going left(j--)(prev col) in a row until next value==curr value 
+    //When next value<curr value & (s1[i-1]==s2[j-1])->alphabet of 2 string matches store it,i--,j--
+    //else move to prev row(i--) in same column
+    // while(i!=0&&j!=0){
+    //     if(dp[i][j]==dp[i][j-1]) j--;
+    //     else if(s1[i-1]==s2[j-1]){
+    //         s[index]=s1[i-1];
+            // i--;
+            // j--;
+            // index--;
+    //     }
+    //     else i--;
+    // }
+    return s;	
+}
+
+25. https://ideone.com/ay0n35
+//1.Tabulation
+//Minor change than (Tabulation for 1b) LCSubsequence LeetCode
+//Remove else or write dp[i][j]=0; in else
+// int lcs(string &str1, string &str2){
+//     int maxi=0,n=str1.size(),m=str2.size();
+//     vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+//     for(int i=1;i<=n;i++){
+//         for(int j=1;j<=m;j++){
+//             if(str1[i-1]==str2[j-1]) {
+//                 dp[i][j]=1+dp[i-1][j-1];
+//                 maxi=max(maxi,dp[i][j]);
+//             }
+//             else dp[i][j]=0;
+//         }
+//     }
+//     return maxi;
+// }
+
+//2.Space Optimization with two row
+// int lcs(string &str1, string &str2){
+//     int maxi=0,n=str1.size(),m=str2.size();
+//     vector<int> prev(m+1,0),curr(m+1,0);
+//     for(int i=1;i<=n;i++){
+//         for(int j=1;j<=m;j++){
+//             if(str1[i-1]==str2[j-1]) {
+//                 curr[j]=1+prev[j-1];
+//                 maxi=max(maxi,curr[j]);
+//             }
+//             else curr[j]=0;
+//         }
+//         prev=curr;
+//     }
+//     return maxi;
+// }
+
+//3.Space Optimization with one row
+//curr to prev, inner loop from m to 1,remove prev=curr;
+int lcs(string &str1, string &str2){
+    int maxi=0,n=str1.size(),m=str2.size();
+    vector<int> prev(m+1,0);
+    for(int i=1;i<=n;i++){
+        for(int j=m;j>=1;j--){
+            if(str1[i-1]==str2[j-1]) {
+                prev[j]=1+prev[j-1];
+                maxi=max(maxi,prev[j]);
+            }
+            else prev[j]=0;
+        }
+    }
+    return maxi;
+}
+
+26. https://ideone.com/jz2KlX
+//Keep in mind length of both strings are different unlike lc pallindromic subsequence
+int lcs(string &s,string &t){
+    int n=s.size();        
+    int m=t.size();
+    vector<int> prev(m+1,0),curr(m+1,0);
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            if(s[i-1]==t[j-1]) curr[j]=1+prev[j-1];
+            else curr[j]=max(prev[j],curr[j-1]);
+        }
+        prev=curr;
+    }
+    return prev[m];
+}
+int canYouMake(string &s1, string &s2){
+    int n=s1.size();        
+    int m=s2.size();
+    //return (n-lcs)+(m-lcs)
+    return n+m-2*lcs(s1,s2);
+}
+
+27. https://ideone.com/jJJqVS
+vector<int> printingLongestIncreasingSubsequence(vector<int> arr, int n) {
+    vector<vector<int>> dp(n+1,vector<int>(n+1,0));
+    for(int ind=n-1;ind>=0;ind--){
+        for(int prev_ind=ind-1;prev_ind>=-1;prev_ind--){
+            int len=0+dp[ind+1][prev_ind+1];
+            if(prev_ind==-1||arr[ind]>arr[prev_ind]) dp[ind][prev_ind+1]=max(len,1+dp[ind+1][ind+1]);
+            else dp[ind][prev_ind+1]=len; 
+        }
+    }
+	int ind=0,j=-1;
+	vector<int> lis;
+	while(ind<n){
+        if(j==-1||arr[ind]>arr[j]){
+            if(1+dp[ind+1][ind+1]>dp[ind+1][j+1]){
+                lis.push_back(arr[ind]);
+                j=ind;
+                ind++;
+            }
+            else ind++;
+        }
+        else ind++;
+    }
+    return lis;
+}
+
+28. https://ideone.com/pWZu2f
+vector<int> printingLongestIncreasingSubsequence(vector<int> arr, int n) {
+	// Write your code here
+    vector<int> dp(n,1),hash(n,-1),lis;
+	int lastIndex=0,maxi=1;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<i;j++){
+        	if(arr[j]<arr[i]&&dp[i]<1+dp[j]){
+				dp[i]=1+dp[j];
+				hash[i]=j;
+			}
+        }
+		if(dp[i]>maxi){
+			lastIndex=i;
+			maxi=dp[i];
+		}
+    }
+	while(lastIndex!=-1){
+		lis.insert(lis.begin(),arr[lastIndex]);
+		lastIndex=hash[lastIndex];
+	}
+    return lis;
+}
+
+29. https://ideone.com/MBlxFn
+int longestBitonicSubsequence(vector<int>& arr, int n)
+{
+	// Write your code here.
+    vector<int> dp1(n,1),arr2=arr,dp2(n,1);
+	reverse(arr2.begin(),arr2.end());
+    for(int i=0;i<n;i++){
+        for(int j=0;j<i;j++){
+            if(arr[j]<arr[i]) dp1[i]=max(1+dp1[j],dp1[i]);                
+			if(arr2[j]<arr2[i]) dp2[i]=max(1+dp2[j],dp2[i]);
+        }
+    }
+	reverse(dp2.begin(),dp2.end());
+	int maxi=1;
+	for(int i=0;i<n;i++){
+		maxi=max(maxi,dp1[i]+dp2[i]-1);
+	}
+    return maxi;
+}
+
+30. https://ideone.com/FY8Yyi
+    int matrixMul(int i,int j, int arr[], vector<vector<int>> &dp){
+        if(i==j) return 0;
+        if(dp[i][j]!=-1) return dp[i][j]; 
+        int mini=INT_MAX;
+        //i to j-1, mul arr[k], call(i,k) ,call(k+1,j),
+        for(int k=i;k<j;k++) {
+            int steps=arr[i-1]*arr[k]*arr[j]+matrixMul(i,k,arr,dp)+matrixMul(k+1,j,arr,dp); //arr[i-1] not arr[i]
+            mini=min(steps,mini);
+        }
+        //i+1 to j, mul arr[k-1], call(i,k-1) ,call(k,j),
+        // for(int k=i+1;k<=j;k++) {
+        //     int steps=arr[i-1]*arr[k-1]*arr[j]+matrixMul(i,k-1,arr,dp)+matrixMul(k,j,arr,dp);
+        //     mini=min(steps,mini);
+        // }
+        return dp[i][j]=mini;
+    }
+    int matrixMultiplication(int N, int arr[])
+    {
+        vector<vector<int>> dp(N,vector<int>(N,-1));
+        return matrixMul(1,N-1,arr,dp);
+    }
+
+31. https://ideone.com/Iv2EpM
+    int matrixMultiplication(int N, int arr[])
+    {
+        vector<vector<int>> dp(N,vector<int>(N,0));
+        for(int i=N-1;i>=1;i--){
+            for(int j=i+1;j<N;j++){
+               int mini=INT_MAX;
+               for(int k=i;k<j;k++) {
+                    int steps=arr[i-1]*arr[k]*arr[j]+dp[i][k]+dp[k+1][j];
+                    mini=min(steps,mini);
+                }    
+                dp[i][j]=mini;
+            }
+        }
+        return dp[1][N-1];
+    }
+
+32. https://ideone.com/XmA4IL
+    int matrixMultiplication(int N, int arr[])
+    {
+        vector<vector<int>> dp(N,vector<int>(N,0));
+        for(int i=N-1;i>=1;i--){
+            for(int j=1;j<N;j++){
+               int mini=INT_MAX;
+               for(int k=i;k<j;k++) {
+                    int steps=arr[i-1]*arr[k]*arr[j]+dp[i][k]+dp[k+1][j];
+                    mini=min(steps,mini);
+                }   
+                if(j!=i)
+                dp[i][j]=mini;
+            }
+        }
+        return dp[1][N-1];
+    }
+
+33. https://ideone.com/gSKoGD
+int f(int i, int j, string s, char r){
+    if(i==j){
+        return s[i]==r;
+    }
+    int ans=0;
+    for(int ind=i+1;ind<j;ind+=2){
+        int lT=f(i,ind-1,s,'T');       
+        int lF=f(i,ind-1,s,'F');
+        int rT=f(ind+1,j,s,'T');       
+        int rF=f(ind+1,j,s,'F');
+        if(s[ind]=='&'){
+            if(r=='T') ans+=lT*rT;
+            else ans+=lF*rF+lT*rF+lF*rT;
+        }       
+        else if(s[ind]=='|'){
+            if(r=='T') ans+=lT*rT+lT*rF+lF*rT;
+            else ans+=lF*rF;
+        }
+        else if(s[ind]=='^'){
+            if(r=='T') ans+=lT*rF+lF*rT;
+            else ans+=lF*rF+lT*rT;
+        }
+    }
+    return ans;
+}
+int evaluateExp(string & exp) {
+    int n=exp.size();
+    return f(0,n-1,exp,'T');
+}
+
+34. https://ideone.com/cDQlLV
+#define ll long long 
+#define mod 1000000007
+int f(int i, int j, string s, int isTrue,vector<vector<vector<int>>> &dp){
+    if(i==j){
+        if(isTrue)
+        return s[i]=='T';
+        else
+        return s[i]=='F';
+    }
+    if(dp[i][j][isTrue]!=-1) return dp[i][j][isTrue];
+    ll ways=0;
+    for(int ind=i+1;ind<j;ind+=2){
+        ll lT=f(i,ind-1,s,1,dp);       
+        ll lF=f(i,ind-1,s,0,dp);
+        ll rT=f(ind+1,j,s,1,dp);       
+        ll rF=f(ind+1,j,s,0,dp);
+        if(s[ind]=='&'){
+            if(isTrue==1) ways=(ways+(lT*rT)%mod)%mod;
+            else ways=(ways+(lF*rF)%mod+(lT*rF)%mod+(lF*rT)%mod)%mod;
+
+        }       
+        else if(s[ind]=='|'){
+            if(isTrue==1) ways=(ways+(lT*rT)%mod+(lT*rF)%mod+(lF*rT)%mod)%mod;
+            else ways=(ways+(lF*rF)%mod)%mod;
+        }
+        else if(s[ind]=='^'){
+            if(isTrue==1) ways=(ways+(lT*rF)%mod+(lF*rT)%mod)%mod;
+            else ways=(ways+(lF*rF)%mod+(lT*rT)%mod)%mod;
+        }
+    }
+    return dp[i][j][isTrue]=ways;
+}
+int evaluateExp(string & exp) {
+    int n=exp.size();
+    vector<vector<vector<int>>> dp(n,vector<vector<int>>(n,vector<int>(2,-1))); 
+    return f(0,n-1,exp,1,dp);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

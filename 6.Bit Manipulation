@@ -1,0 +1,181 @@
+1. https://ideone.com/SupR6b
+void toBinary(int n)
+{
+    // your code here
+    vector<int> ans;
+    while(n){
+       ans.push_back(n%2);
+       n/=2;
+    }  
+    reverse(ans.begin(),ans.end());
+    for(auto it:ans) cout<<it;
+}
+
+2. https://ideone.com/R2CqUg
+    int binary_to_decimal(string str) {
+        // Code here.
+        int n=str.size(),p=1,ans=0;
+        for(int i=n-1;i>=0;i--){
+            if(str[i]=='1') ans+=p;
+            p*=2;
+        }
+        return ans;
+    }
+
+3. https://ideone.com/ikT6KF
+    bool checkKthBit(int n, int k)
+    {
+        // Your code here
+        // It can be a one liner logic!! Think of it!!
+        
+        // if((n>>k)&1) return true;
+        // return false;
+
+        if((1<<k)&n) return true;
+        return false;
+    }
+
+4. https://ideone.com/sBXDjb
+    int setKthBit(int N, int K)
+    {
+        // Write Your Code here
+        return N|(1<<K);
+    }
+
+5. https://ideone.com/UQJ4ay
+vector<int> bitManipulation(int num, int i){
+    // Write your code here.
+    i--;
+    vector<int> ans;
+    ans.push_back(1&(num>>i));    
+    ans.push_back(num|(1<<i));
+    ans.push_back(num&~(1<<i));
+    return ans;
+}
+
+6. https://ideone.com/sNmGI8
+class Solution {
+  public:
+    bool isEven(int n) {
+        // code here
+        if(n&1) return false;
+        return true;
+    }
+};
+
+7. https://ideone.com/5oIKk6
+        int cnt=0;
+        for(int i=1;i<=n;i++){
+            while(i){
+                i=i&(i-1);
+                cnt++;
+            }
+        }
+        return cnt;
+
+8. https://ideone.com/tbAtlJ
+    int f(int x){
+        if(x%4==0) return x;
+        if(x%4==1) return 1;
+        if(x%4==2) return x+1;
+        if(x%4==3) return 0;
+    }
+    int findXOR(int l, int r) {
+        // complete the function here
+        return f(l-1)^f(r);
+    }
+
+9. https://ideone.com/OsrDuy
+        int cnt=0;
+        while(n){
+            n/=10;
+            cnt++;
+        }
+        return cnt;
+        
+        or
+        
+        return (int)log10(n)+1;
+
+10. https://ideone.com/ONkeQe
+    string armstrongNumber(int n) {
+        int x=n,sum=0;
+        while(x){
+            int ld=x%10;
+            sum+=pow(ld,3);
+            x/=10;
+        }
+        return n==sum?"true":"false";
+    }
+
+11. https://ideone.com/yh8EQ1
+	vector<int>AllPrimeFactors(int n) {
+	    // Code here
+	    vector<int> ans;
+	    for(int i=2;i*i<=n;i++){
+	        if(n%i==0){
+	            ans.push_back(i);
+	            while(n%i==0) n/=i;
+	        }
+	    }
+	    //wrong tc:6
+	    //if(n!=1) return {n};
+	    if(n!=1) ans.push_back(n);
+	    return ans;
+	}
+
+12. https://ideone.com/rYynON
+    vector<int> findPrimeFactors(int n) {
+        vector<int> spf(n+1),ans;
+        for(int i=0;i<=n;i++) spf[i]=i;
+        for(int i=2;i*i<=n;i++){
+            if(spf[i]==i){
+                for(int j=i*i;j<=n;j+=i) {
+                    if(spf[j]==j) spf[j]=i;
+                }
+            }
+        }
+        // while(spf[n]!=n){
+        //     ans.push_back(spf[n]);
+        //     n=n/spf[n];
+        // }
+        // ans.push_back(n);
+        while(n!=1){
+            ans.push_back(spf[n]);
+            n=n/spf[n];
+        }
+        return ans;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
